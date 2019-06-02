@@ -11,7 +11,31 @@ const Container = styled.div`
 
 class App extends React.Component {
   state = initData;
-  onDragEnd = result => {
+
+  onDragStart = (start, provided) => {
+    provided.announce(
+      `You have lifted the task in position ${start.source.index + 1}`,
+    );
+  };
+
+  onDragUpdate = (update, provided) => {
+    const msg = update.destination
+      ? `You have moved the task to position ${update.destination.index + 1}`
+      : `You are currently not over a droppable area`;
+    
+    provided.announce(
+      msg
+    );
+  };
+
+  onDragEnd = (result, provided) => {
+    const msg = result.destination
+      ? `You have moved the task to position ${result.destination.index + 1}`
+      : `The task has been returned to its starting position of ${result.source.index + 1}`;
+    
+    provided.announce(
+      msg
+    );
     const { destination, source, draggableId, type } = result;
 
     if(!destination){
@@ -92,7 +116,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext 
+        onDragStart={this.onDragStart}
+        onDragUpdate={this.onDragUpdate}
+        onDragEnd={this.onDragEnd}
+      >
         <Droppable 
           droppableId="allcolumns"
           direction="horizontal"
