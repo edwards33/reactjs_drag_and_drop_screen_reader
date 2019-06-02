@@ -1,3 +1,1 @@
-# react-jlfwkx
-
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/react-jlfwkx)
+## Rect.js App with drag and drop options: Screen Reader
